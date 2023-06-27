@@ -1,6 +1,7 @@
 /********** VARIABLES **********/
  
 let works = [];
+let categories = [];
 
 /********** FUNCTIONS **********/
 
@@ -19,7 +20,17 @@ async function fetchWorks(){
         console.log(worksResponse);
     })
     //if error here return error in the console.
-    .catch((error)=>console.log(error))
+    .catch((error)=>console.log(error));
+}
+
+async function fetchCategories(){
+    await fetch('http://localhost:5678/api/categories')
+    .then((response)=>response.json())
+    .then((categoriesResponse)=>{
+        categories = categoriesResponse;
+        console.log(categoriesResponse);
+    })
+    .catch((error)=>console.log(error));
 }
 
 //generate works
@@ -58,9 +69,38 @@ async function generateWorks(){
     }
 }
 
+async function creationCategoriesFilters (){
+    await fetchCategories();
+    console.log(categories);
+    
+    const sectionPortfolio = document.querySelector("#portfolio");
+    const divGallery = document.querySelector(".gallery");
+    const divCategories = document.createElement("div");
+    divCategories.classList.add("filters");
+    sectionPortfolio.insertBefore(divCategories, divGallery);
+
+    const categorieButton = document.createElement("button");
+    categorieButton.dataset.id = 0;
+    categorieButton.textContent = "Tous";
+    
+    divCategories.appendChild(categorieButton);
+
+    for (let i = 0; i < categories.length ; i++){
+        const categorie = categories[i];
+        
+        const categorieButton = document.createElement("button");
+        categorieButton.dataset.id = categorie.id;
+        categorieButton.textContent = categorie.name;
+        
+        divCategories.appendChild(categorieButton);
+    }
+}
 /********** SCRIPT **********/
 
 generateWorks();
+creationCategoriesFilters ()
+
+
 
 
 
