@@ -17,7 +17,8 @@ async function fetchWorks(){
         // works fetch the data json in a table.
         works = worksResponse;
         //return worksResponse in the console.
-        console.log(worksResponse);
+        // console.log(worksResponse);
+        return works;
     })
     //if error here return error in the console.
     .catch((error)=>console.log(error));
@@ -28,24 +29,22 @@ async function fetchCategories(){
     .then((response)=>response.json())
     .then((categoriesResponse)=>{
         categories = categoriesResponse;
-        console.log(categoriesResponse);
+        // console.log(categoriesResponse);
+        return categories;
     })
     .catch((error)=>console.log(error));
 }
 
 //generate works
-async function generateWorks(){
-    // call fetchWorks function for fetch datas
-    await fetchWorks();
-    // checkpoint
-    console.log(works);
-    for (let i = 0; i< works.length; i++) {
+function generateWorks(worksArray){
+    const divGallery = document.querySelector(".gallery");
+    divGallery.innerHTML="";
+    for (let i = 0; i< worksArray.length; i++) {
         //checkpoint
-        console.log(works[i]);
+        // console.log(works[i]);
 
         // fetch DOM element which will host the works
-        const divGallery = document.querySelector(".gallery");
-
+        
         // creation of a <figure> tag 
         const workElement = document.createElement("figure");
         // creation of a <img> tag, for works' images (imageUrl)
@@ -54,11 +53,11 @@ async function generateWorks(){
         const titleWork = document.createElement("figcaption");
 
         //insert src of the image
-        imageWork.src = works[i].imageUrl;
+        imageWork.src = worksArray[i].imageUrl;
         //insesrt alt of the image
-        imageWork.alt = works[i].title;
+        imageWork.alt = worksArray[i].title;
         //insert title of the image
-        titleWork.innerText = works[i].title;
+        titleWork.innerText = worksArray[i].title;
 
         //link the <img> and <figcaption> tag to the <figure>
         workElement.appendChild(imageWork);
@@ -71,7 +70,7 @@ async function generateWorks(){
 
 async function creationCategoriesFilters (){
     await fetchCategories();
-    console.log(categories);
+    // console.log(categories);
     
     const sectionPortfolio = document.querySelector("#portfolio");
     const divGallery = document.querySelector(".gallery");
@@ -95,10 +94,53 @@ async function creationCategoriesFilters (){
         divCategories.appendChild(categorieButton);
     }
 }
-/********** SCRIPT **********/
 
-generateWorks();
-creationCategoriesFilters ()
+function removeClass(elements, classRemoved){
+    for (let i = 0; i < elements.length ; i++){
+        elements[i].classList.remove(classRemoved);
+    }
+}
+
+function addListenerCategories() {
+    const categoriesElements= document.querySelectorAll("#portfolio .filters button");
+    // console.log(categoriesElements);
+    
+    for (let i = 0; i < categoriesElements.length; i++){
+        
+        categoriesElements[i].addEventListener("click",function (event) {
+            removeClass(categoriesElements,"selected");
+            let categoryWorks = [];
+            console.log("click click! "+ "i: " + i);
+            const id = event.target.dataset.id;
+            for ( let j = 0 ; j < works.length ; j++){
+                console.log("catégorie : " + works[j].categoryId + "; id : " +id);
+                console.log(id == works[j].categoryId);
+                
+                if (id == 0){
+                    categoryWorks = works;
+                    console.log(categoryWorks);
+                } else if (id == works[j].categoryId) {
+                    categoryWorks.push(works[j]);
+                    console.log(categoryWorks);
+                }
+
+                generateWorks(categoryWorks);
+                categoriesElements[i].classList.add("selected");
+            } 
+        })
+    }
+}
+
+
+/********** SCRIPT **********/
+fetchWorks().then(()=>{
+    generateWorks(works);
+});
+
+creationCategoriesFilters().then(()=>{
+    addListenerCategories();
+});
+
 
 
 
