@@ -68,6 +68,7 @@ function generateWorks(worksArray){
     }
 }
 
+// generate categorie buttons
 async function creationCategoriesFilters (){
     await fetchCategories();
     // console.log(categories);
@@ -95,20 +96,22 @@ async function creationCategoriesFilters (){
     }
 }
 
+// a litlle function for remove classes
 function removeClass(elements, classRemoved){
     for (let i = 0; i < elements.length ; i++){
         elements[i].classList.remove(classRemoved);
     }
 }
 
+//Display works by category
 function addListenerCategories() {
-    const categoriesElements= document.querySelectorAll("#portfolio .filters button");
+    const btnCategoriesElements= document.querySelectorAll("#portfolio .filters button");
     // console.log(categoriesElements);
     
-    for (let i = 0; i < categoriesElements.length; i++){
+    for (let i = 0; i < btnCategoriesElements.length; i++){
         
-        categoriesElements[i].addEventListener("click",function (event) {
-            removeClass(categoriesElements,"selected");
+        btnCategoriesElements[i].addEventListener("click",function (event) {
+            removeClass(btnCategoriesElements,"selected");
             let categoryWorks = [];
             console.log("click click! "+ "i: " + i);
             const id = event.target.dataset.id;
@@ -125,7 +128,7 @@ function addListenerCategories() {
                 }
 
                 generateWorks(categoryWorks);
-                categoriesElements[i].classList.add("selected");
+                btnCategoriesElements[i].classList.add("selected");
             } 
         })
     }

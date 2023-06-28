@@ -125,6 +125,32 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+#portfolio .filters{
+	display : flex;
+	justify-content: center;
+	gap : 10px;
+	margin-bottom: 30px;
+}
+
+#portfolio .filters button {
+	padding: 10px 15px;
+	min-width: 100px;
+	border-radius: 60px;
+	background-color : white;
+	border: 1px solid #1D6154; 
+	color: #1D6154;
+	text-align: center;
+	font-size: 16px;
+	font-family: Syne;
+	font-weight: 700; 
+}
+
+#portfolio .filters .selected{
+	color: white;
+	background-color: #1D6154;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
