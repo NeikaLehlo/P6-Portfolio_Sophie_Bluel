@@ -44,11 +44,13 @@ async function fetchLogin(email, password){
     .then((loginResponse) => {
         console.log("Requête ok");
         console.log(loginResponse);
-        console.log(loginResponse.token)
+        // console.log(loginResponse.token)
         if (!loginResponse.token){
             console.log("Email et/ou Mot de Passe incorrect");
             throw new Error("Email et/ou Mot de Passe incorrect");
         } else{
+            window.localStorage.setItem("User", loginResponse.token );
+            // console.log(window.localStorage.getItem("User"));
             location.assign("./index.html");
         }
     })
