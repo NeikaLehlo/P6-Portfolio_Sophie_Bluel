@@ -79,6 +79,7 @@ async function creationCategoriesFilters (){
     divCategories.classList.add("filters");
     sectionPortfolio.insertBefore(divCategories, divGallery);
 
+    //unshift
     const categorieButton = document.createElement("button");
     categorieButton.dataset.id = 0;
     categorieButton.textContent = "Tous";
@@ -87,7 +88,6 @@ async function creationCategoriesFilters (){
 
     for (let i = 0; i < categories.length ; i++){
         const categorie = categories[i];
-        
         const categorieButton = document.createElement("button");
         categorieButton.dataset.id = categorie.id;
         categorieButton.textContent = categorie.name;
@@ -108,6 +108,7 @@ function addListenerCategories() {
     const btnCategoriesElements= document.querySelectorAll("#portfolio .filters button");
     // console.log(categoriesElements);
     
+    //foreach
     for (let i = 0; i < btnCategoriesElements.length; i++){
         
         btnCategoriesElements[i].addEventListener("click",function (event) {
@@ -115,6 +116,8 @@ function addListenerCategories() {
             let categoryWorks = [];
             console.log("click click! "+ "i: " + i);
             const id = event.target.dataset.id;
+
+            //voir for each
             for ( let j = 0 ; j < works.length ; j++){
                 console.log("catégorie : " + works[j].categoryId + "; id : " +id);
                 console.log(id == works[j].categoryId);
@@ -129,11 +132,10 @@ function addListenerCategories() {
 
                 generateWorks(categoryWorks);
                 btnCategoriesElements[i].classList.add("selected");
-            } 
+            }
         })
     }
 }
-
 
 /********** SCRIPT **********/
 fetchWorks().then(()=>{
@@ -143,35 +145,3 @@ fetchWorks().then(()=>{
 creationCategoriesFilters().then(()=>{
     addListenerCategories();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const test = async() =>{
-
-// } 
-
-// foreach
-// forin
-// forof
-// for ( let work of works){
-
-// }
-
-// data-qqch = 

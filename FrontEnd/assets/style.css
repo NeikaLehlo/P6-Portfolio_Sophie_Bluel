@@ -256,4 +256,8 @@ footer nav ul {
 	margin : auto;
 }
 
-
+#errorMessage{
+	text-align: center;
+	color : red;
+	margin : 10px;
+}
