@@ -151,6 +151,7 @@ li:hover a{
 	font-size: 16px;
 	font-family: Syne;
 	font-weight: 700; 
+	cursor: pointer;
 }
 
 #portfolio .filters .selected{
@@ -260,4 +261,62 @@ footer nav ul {
 	text-align: center;
 	color : red;
 	margin : 10px;
+}
+
+#divEditionMain{
+	display: flex;
+	position: relative;
+	width: 1440px;
+	height: 59px;
+	left: -150px;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+	color: white;
+	gap: 10px;
+	
+}
+
+#divEditionMain div{
+	background-color: white;
+	color: black;
+	padding: 11px 23px;
+	border-radius: 60px;
+	margin-left: 12px;
+	cursor: pointer;
+}
+
+#divEditionPfp{
+	display: flex;
+	align-items: flex-start;
+	margin: auto;
+	padding-top: 10px;;
+	width: 80%;
+	gap : 8px;
+	cursor: pointer;
+}
+
+#divEditionPfp img{
+	height : 18px;
+	width: 18px;
+	margin:0;
+}
+
+.portfolioTitle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+}
+
+#divEditionGallery{
+	display: flex;
+	gap : 8px;
+	margin-bottom: 30px;
+	cursor: pointer;
+}
+
+#divEditionGallery img{
+	height : 18px;
+	width: 18px;
 }

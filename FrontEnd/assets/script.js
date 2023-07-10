@@ -137,11 +137,61 @@ function addListenerCategories() {
     }
 }
 
+/******** ADMINISTRATION MODE ********/
+//main function for Admin Mode
+function adminMode(){
+    if(window.localStorage.getItem("User")){
+        console.log("Connected !");
+        let bodySection = document.querySelector("body");
+        let headerSection = document.querySelector("header");
+        divEditionMain = document.createElement("div");
+        divEditionMain.id = "divEditionMain";
+        bodySection.insertBefore(divEditionMain, headerSection);
+        divEditionMain.innerHTML =  `
+        <img src="./assets/icons/EditionWhite.png">
+        <p>Mode édition</>
+        <div>publier les changements</div>
+        `
+        logout();
+
+        let profilePicture = document.querySelector("figure");
+        divEditionPfp = document.createElement("div");
+        divEditionPfp.id = "divEditionPfp";
+        profilePicture.appendChild(divEditionPfp);
+        divEditionPfp.innerHTML=`
+        <img src="./assets/icons/EditionBlack.png">
+        <p>modifier</>
+        `
+
+        let portfolioTitle = document.querySelector(".portfolioTitle");
+        divEditionGallery = document.createElement("div");
+        divEditionGallery.id = "divEditionGallery";
+        portfolioTitle.appendChild(divEditionGallery);
+        divEditionGallery.innerHTML=`
+        <img src="./assets/icons/EditionBlack.png">
+        <p>modifier</>
+        `
+    }
+}
+
+// logout
+function logout(){
+    let login = document.getElementById("login");
+    login.innerText="logout";
+    login.href="./index.html";
+    login.addEventListener("click", () =>{
+        localStorage.removeItem("User");
+    })
+}
+
 /********** SCRIPT **********/
 fetchWorks().then(()=>{
     generateWorks(works);
 });
 
+adminMode();
+
 creationCategoriesFilters().then(()=>{
     addListenerCategories();
 });
+
