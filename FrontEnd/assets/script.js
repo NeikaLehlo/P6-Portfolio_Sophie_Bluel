@@ -140,7 +140,9 @@ function addListenerCategories() {
 /******** ADMINISTRATION MODE ********/
 //main function for Admin Mode
 function adminMode(){
-    if(window.localStorage.getItem("User")){
+    if(localStorage.getItem("User")){
+
+        //top bar admin edition
         console.log("Connected !");
         let bodySection = document.querySelector("body");
         let headerSection = document.querySelector("header");
@@ -151,9 +153,10 @@ function adminMode(){
         <img src="./assets/icons/EditionWhite.png">
         <p>Mode édition</>
         <div>publier les changements</div>
-        `
+        `;
         logout();
 
+        // intro picture - button edition 
         let profilePicture = document.querySelector("figure");
         divEditionPfp = document.createElement("div");
         divEditionPfp.id = "divEditionPfp";
@@ -161,8 +164,9 @@ function adminMode(){
         divEditionPfp.innerHTML=`
         <img src="./assets/icons/EditionBlack.png">
         <p>modifier</>
-        `
+        `;
 
+        // Portfolio - button edition
         let portfolioTitle = document.querySelector(".portfolioTitle");
         divEditionGallery = document.createElement("div");
         divEditionGallery.id = "divEditionGallery";
@@ -170,7 +174,9 @@ function adminMode(){
         divEditionGallery.innerHTML=`
         <img src="./assets/icons/EditionBlack.png">
         <p>modifier</>
-        `
+        `;
+
+        initListenerEditionModal();
     }
 }
 
