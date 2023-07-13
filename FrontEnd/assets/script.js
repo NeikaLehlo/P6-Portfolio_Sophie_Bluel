@@ -131,6 +131,7 @@ function addListenerCategories() {
                 }
 
                 generateWorks(categoryWorks);
+                modalGenerateWorks(categoryWorks)
                 btnCategoriesElements[i].classList.add("selected");
             }
         })
@@ -176,7 +177,8 @@ function adminMode(){
         <p>modifier</>
         `;
 
-        initListenerEditionModal();
+        modalDisplayHide();
+        modalNavigation();
     }
 }
 
@@ -193,11 +195,11 @@ function logout(){
 /********** SCRIPT **********/
 fetchWorks().then(()=>{
     generateWorks(works);
+    modalGenerateWorks(works);
 });
-
-adminMode();
 
 creationCategoriesFilters().then(()=>{
     addListenerCategories();
 });
 
+adminMode();
