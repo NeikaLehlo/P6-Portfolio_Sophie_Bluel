@@ -351,25 +351,15 @@ footer nav ul {
 	background-color: rgba(0, 0, 0, 0.30);
 }
 
-#modalSection.hidden{
-	display: none;
-}
-
-.hidden{
-	display: none;
-}
-
 #modal{
-	position: relative;
+	position: absolute;
 	width: 570px;
-	height: 670px;
+	/* max-height: 80%; */
     top: 50%;
     left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%,-50%);
 	display: flex;
 	flex-direction: column;
-	/* justify-content: center; */
-    align-items: center;
 	background-color: white;
 	border-radius:10px;
 	padding: 30px;
@@ -377,14 +367,18 @@ footer nav ul {
 
 .modalNav{
 	display: flex;
-	justify-content: space-between;
+	justify-content:flex-end;
 	width : 100%;
 	margin-bottom : 10px;
 }
 
 .arrowReturn{
+	position: relative;
+	display: flex;
 	width: 21px;
 	height: 21px;
+	top:0;
+	right:525px;
 }
 
 .modalEditionGallery{
@@ -392,7 +386,6 @@ footer nav ul {
 	flex-direction: column;
 	align-items: center;
 }
-
 
 h3{
 	text-align: center;
@@ -403,8 +396,9 @@ h3{
 
 .modalGallery{
 	display: flex;
-	flex-wrap: wrap;	gap : 6px;
-	margin : 0 75px 50px 75px;
+	flex-wrap: wrap;	
+	gap : 7px;
+	margin : 0 75px;
 }
 
 .modalGallery figure{
@@ -440,12 +434,9 @@ figure .trash{
 	height: 11px;
 	padding: 3px 4px;
 	border-radius: 1px;
-
 	cursor: pointer;
 	background-color: black;
 }
-
-
 
 .separationLine{
 	content: "";
@@ -454,6 +445,7 @@ figure .trash{
 	height: 1px; 
 	background: #B3B3B3; 
 	margin-bottom: 38px;
+	margin-top: 47px;
 }
 
 .buttonAddPicture{
@@ -466,14 +458,118 @@ figure .trash{
 	font-size: 14px;
 	padding:10px;
 	margin-bottom: 23px;
+	
 }
 
 .buttonSupprAllProjects{
 	color: #D65353;
 	text-align: center;
 	font-family: Syne;
-	font-size: 14px; 
+	font-size: 14px;
+	margin-bottom:18px;
 }
 
+.modalAddProject {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 
+#modalForm{
+	display: flex;
+	flex-direction:column;
+}
+
+.preview{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 420px;
+	height: 125px;
+	border-radius: 3px;
+	background: #E8F1F6;
+	padding: 22px 0;
+	margin-bottom: 30px;
+}
+
+.preview img{
+	margin-bottom: 15px;
+}
+
+.sendPictureClass{
+	position: relative;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+.sendPictureClass label{
+	position: relative;
+	width: 173px;
+	height: 36px;
+	padding: 10px 33px;
+	border-radius: 50px;
+	background: #CBD6DC;
+	color: #306685;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.sendPictureClass input{
+	position : absolute;
+	top:0;
+	left: 0;
+	/* width : 173px;
+	opacity: 0; */
+	cursor: pointer;
+	z-index:-1;
+}
+
+.modalValidateButton{
+	width: 237px;
+	border-radius: 60px;
+	background-color: #A7A7A7; 
+	
+	color: #FFF;
+	text-align: center;
+	font-family: Syne;
+	font-size: 14px;
+	padding:10px;
+	margin-bottom: 23px;
+	border: none;
+}
+
+.preview p{
+	color: #444;
+	text-align: center;
+	font-size: 10px;
+	margin-top:17px;
+}
+
+.modalLabel {
+	color: #3D3D3D;
+	margin-bottom: 10px;
+}
+
+.modalField{
+	width: 420px;
+	height: 51px;
+	background: #FFF;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
+	padding:0;
+}
+
+#pictureTitle{
+	margin-bottom: 20px;
+}
+
+#modalSection.hidden{
+	display: none;
+}
+
+.hidden{
+	display: none;
+}
 

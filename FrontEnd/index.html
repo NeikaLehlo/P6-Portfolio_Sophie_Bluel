@@ -62,13 +62,12 @@
 	<section id="modalSection" class="hidden">
 		<div id="modal">
 			<div class="modalNav">
-				<img class="arrowReturn" src="./assets/icons/arrow-left.png">
+				<img class="arrowReturn hidden" src="./assets/icons/arrow-left.png">
 				<img class="crossClose" src="./assets/icons/close.png">
 			</div>
 			<div class="modalEditionGallery">
 				<h3>Galerie photo</h3>
 				<div class="modalGallery">
-					<!-- just for add the css before JS -->
 					<figure>
 						<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
 						<p>éditer</p>
@@ -153,19 +152,25 @@
 			</div>
 			<div class="modalAddProject hidden">
 				<h3>Ajout photo</h3>
-				<form method="POST" enctype="multipart/form-data">
-					<div>
+				<form id="modalForm" method="POST" enctype="multipart/form-data">
+					<div class="preview">
 						<img src="./assets/icons/picture.png">
-						<label for="sendPicture">+ Ajouter photo</label>
-						<input type="file" id="sendPicture" name="sendPicture" accept="image/png, image/jpeg">
+						<div class="sendPictureClass">
+							<label for="sendPicture">+ Ajouter photo</label>
+							<input type="file" id="sendPicture" name="sendPicture" accept="image/png, image/jpeg">
+						</div>
+						<p>jpg, png : 4mo max</p>
 					</div>
-					<label for="pictureTitle">Titre</label>
-					<input type="text" id="pictureTitle" name="pictureTitle">
-					<label for="pictureCategorie">Catégorie</label>
-					<select name="pictureCategorie" id="pictureCategorie">
-						<!-- Générer automatiquement en JS -->
+					<label class="modalLabel" for="pictureTitle">Titre</label>
+					<input class="modalField" type="text" id="pictureTitle" name="pictureTitle">
+					<label class="modalLabel" for="pictureCategorie">Catégorie</label>
+					<select class="modalField" name="pictureCategorie" id="pictureCategorie">
 					</select>
+					<div class="separationLine"></div>
+					
 				</form>
+				<button class="modalValidateButton">Valider</button>
+
 			</div>
 		</div>
 	</section>
