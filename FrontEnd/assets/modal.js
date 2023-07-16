@@ -12,7 +12,7 @@ function displayHideElement(element){
     element.classList.toggle("hidden");
 }
 
-
+// ****MODAL BASICS : CLOSE, OPEN, RETURN BUTTON ETC ...****//
 // display or hide modalSection
 function modalDisplayHide() {
     const divEditionGallery = document.getElementById("divEditionGallery");
@@ -55,6 +55,7 @@ function modalNavigation(){
     })
  } 
 
+ // **** GALLERY ****//
  //generate works in modal
  function modalGenerateWorks(worksArray){
     const divModalGallery = document.querySelector(".modalGallery");
@@ -91,19 +92,20 @@ function modalNavigation(){
  }
 
 
-
+//**** PICTURE PREVIEW ****//
 
 //preview picture in "Ajout photo" :
-function previewPicture() {
-
+function previewPicture(curFile) {
     idSendPicture.addEventListener("change", ()=> {
         // console.log("previewPicture click");
 
         //fetch files info.
         let curFile = idSendPicture.files;
-        // console.log(curFile);
-
-        if (curFile){
+        console.log(curFile);
+        console.log(curFile[0].size);
+        console.log(curFile[0].type);
+        validFile(curFile);
+        if (validFile(curFile)){
             // console.log("PreviewPicture if");
             classImgPreview.src = URL.createObjectURL(curFile[0]);
             // console.log(URL.createObjectURL(curFile[0]));
@@ -114,9 +116,11 @@ function previewPicture() {
             displayHideElement(classPreviewP);
             //display
             displayHideElement(classImgPreview);
+
+            classPreviewP.innerText="jpg, png : 4mo max";
+            classPreviewP.style.color="#444";
         }
     });
-    
 }
 
 // reset picture when you click on it.
@@ -135,4 +139,47 @@ function clickResetPicture(){
         // clear input.
         idSendPicture.value = null;
     });
+}
+
+function validType(curFile){
+    //valid type file
+    const fileTypes = [
+        'image/jpeg',
+        'image/png'
+      ];
+
+    for(let i=0; i<fileTypes.length; i++){
+        if(curFile[0].type === fileTypes[i]) {
+            return true;
+        }
+    };
+    throw new Error("Le type de fichier sélectionné n'est pas valide. Fichier autorisé : .jpeg , .png")
+}
+
+function validSize(curFile){
+    //max size accepted
+    const maxSize = 4194304; 
+
+    if(curFile[0].size <= maxSize){
+        return true;
+    }
+
+    throw new Error("La taille du fichier n'est pas valide. Taille Max: 4Mo.");
+}
+
+function validFile(curFile){
+    try{
+        validType(curFile);
+        validSize(curFile);
+        return true;
+    }
+    catch(error){
+        errorMessage(error.message)
+        return false;
+    }
+}
+
+function errorMessage(message){
+    classPreviewP.innerText=message;
+    classPreviewP.style.color="red";
 }

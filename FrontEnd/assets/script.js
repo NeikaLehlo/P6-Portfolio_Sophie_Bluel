@@ -181,6 +181,7 @@ function adminMode(){
         modalNavigation();
         previewPicture();
         clickResetPicture()
+        
     }
 }
 
