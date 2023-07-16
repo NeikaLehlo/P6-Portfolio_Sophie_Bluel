@@ -78,17 +78,18 @@
 				<h3>Ajout photo</h3>
 				<form id="modalForm" method="POST" enctype="multipart/form-data">
 					<div class="preview">
-						<img src="./assets/icons/picture.png">
+						<img class="noPicture"src="./assets/icons/picture.png">
+						<img class="imgPreview hidden">
 						<div class="sendPictureClass">
 							<label for="sendPicture">+ Ajouter photo</label>
 							<input type="file" id="sendPicture" name="sendPicture" accept="image/png, image/jpeg">
 						</div>
-						<p>jpg, png : 4mo max</p>
+						<p class="previewP">jpg, png : 4mo max</p>
 					</div>
 					<label class="modalLabel" for="pictureTitle">Titre</label>
 					<input class="modalField" type="text" id="pictureTitle" name="pictureTitle">
 					<label class="modalLabel" for="pictureCategorie">Catégorie</label>
-					<select class="modalField" name="pictureCategorie" id="pictureCategorie">
+					<select class="modalField selectCategorie" name="pictureCategorie" id="pictureCategorie">
 					</select>
 					<div class="separationLine"></div>
 					

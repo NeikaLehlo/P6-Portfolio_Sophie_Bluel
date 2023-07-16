@@ -179,6 +179,8 @@ function adminMode(){
 
         modalDisplayHide();
         modalNavigation();
+        previewPicture();
+        clickResetPicture()
     }
 }
 

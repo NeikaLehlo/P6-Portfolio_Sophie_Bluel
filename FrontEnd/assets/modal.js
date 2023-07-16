@@ -1,6 +1,10 @@
 //****** VARIABLES ******//
 const modalSection = document.getElementById("modalSection");
-
+const idSendPicture = document.getElementById("sendPicture");
+const classImgPreview = document.querySelector(".imgPreview");
+const classNoPicture = document.querySelector(".noPicture");
+const classSendPictureClass = document.querySelector(".sendPictureClass");
+const classPreviewP = document.querySelector(".previewP");
 //****** FUNCTIONS ******/
 
 //Add or Remove "hidden" class for display or hide Element.
@@ -13,7 +17,7 @@ function displayHideElement(element){
 function modalDisplayHide() {
     const divEditionGallery = document.getElementById("divEditionGallery");
     divEditionGallery.addEventListener("click", function (){
-        console.log("Affichage Edition Modal. ... Normalement.");
+        // console.log("Affichage Edition Modal. ... Normalement.");
         displayHideElement(modalSection);
     })
 
@@ -86,3 +90,49 @@ function modalNavigation(){
     })
  }
 
+
+
+
+//preview picture in "Ajout photo" :
+function previewPicture() {
+
+    idSendPicture.addEventListener("change", ()=> {
+        // console.log("previewPicture click");
+
+        //fetch files info.
+        let curFile = idSendPicture.files;
+        // console.log(curFile);
+
+        if (curFile){
+            // console.log("PreviewPicture if");
+            classImgPreview.src = URL.createObjectURL(curFile[0]);
+            // console.log(URL.createObjectURL(curFile[0]));
+
+            //hide
+            displayHideElement(classNoPicture);
+            displayHideElement(classSendPictureClass);
+            displayHideElement(classPreviewP);
+            //display
+            displayHideElement(classImgPreview);
+        }
+    });
+    
+}
+
+// reset picture when you click on it.
+function clickResetPicture(){
+
+    classImgPreview.addEventListener("click", () =>{
+        // console.log("click picture ok");
+        
+        //display
+        displayHideElement(classNoPicture);
+        displayHideElement(classSendPictureClass);
+        displayHideElement(classPreviewP);
+        //hide
+        displayHideElement(classImgPreview);
+
+        // clear input.
+        idSendPicture.value = null;
+    });
+}
