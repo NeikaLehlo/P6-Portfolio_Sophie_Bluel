@@ -180,8 +180,11 @@ function adminMode(){
         modalDisplayHide();
         modalNavigation();
         previewPicture();
-        clickResetPicture()
-        
+        clickResetPicture();
+        initCategorieSelect();
+        validateFormGreen();
+        EventListenerTextInput();
+        addWorks();
     }
 }
 
