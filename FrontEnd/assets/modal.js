@@ -13,6 +13,7 @@ const buttonAddPicture = document.querySelector(".buttonAddPicture");
 const modalEditionGallery = document.querySelector(".modalEditionGallery");
 const modalAddProject = document.querySelector(".modalAddProject");
 const arrowReturn = document.querySelector(".arrowReturn")
+const classTrash = document.querySelectorAll(".trash");
 //****** FUNCTIONS ******/
 
 //Add or Remove "hidden" class for display or hide Element.
@@ -92,6 +93,12 @@ function modalNavigation(){
         workElement.appendChild(trashWork);
 
         divModalGallery.appendChild(workElement);
+
+        trashWork.addEventListener("click", () =>{
+            console.log(work.id);
+            let workId = work.id
+            delWork(workId);
+        })
     })
  }
 
@@ -295,6 +302,27 @@ function addWorks(){
 
     });
     
+}
+
+
+
+async function delWork(workId){
+    try{
+        let token = localStorage.getItem("User");
+        await fetch(`http://localhost:5678/api/works/${workId}`, {
+                method :"DELETE",
+                headers:{   
+                            "Authorization": `Bearer ${token}`
+                        },
+                // body: workId
+            });
+        fetchWorks().then(()=>{
+            generateWorks(works);
+            modalGenerateWorks(works);
+        });
+    } catch(error){
+        console.log(error);
+    }
 }
 
 //ADD PROJECT

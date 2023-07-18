@@ -140,7 +140,7 @@ function addListenerCategories() {
 
 /******** ADMINISTRATION MODE ********/
 //main function for Admin Mode
-function adminMode(){
+async function adminMode(){
     if(localStorage.getItem("User")){
 
         //top bar admin edition
@@ -185,6 +185,8 @@ function adminMode(){
         validateFormGreen();
         EventListenerTextInput();
         addWorks();
+        // supprWork()
+        // console.log(classTrash);
     }
 }
 
@@ -194,7 +196,7 @@ function logout(){
     login.innerText="logout";
     login.href="./index.html";
     login.addEventListener("click", () =>{
-        localStorage.removeItem("User");
+    localStorage.removeItem("User");
     })
 }
 
@@ -208,4 +210,7 @@ creationCategoriesFilters().then(()=>{
     addListenerCategories();
 });
 
-adminMode();
+adminMode()
+// .then(() =>{
+//     supprWork();
+// });

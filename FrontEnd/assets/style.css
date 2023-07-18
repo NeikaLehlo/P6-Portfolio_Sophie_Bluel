@@ -520,6 +520,11 @@ figure .trash{
 	cursor: pointer;
 }
 
+.divButtonForm{
+	display: flex;
+	justify-content: center;
+}
+
 .sendPictureClass input{
 	position : absolute;
 	top:0;
