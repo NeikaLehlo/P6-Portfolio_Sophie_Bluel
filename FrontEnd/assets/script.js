@@ -72,17 +72,12 @@ async function generateWorks(worksArray){
 async function categoriesFilters (){
     await fetchCategories();
     // console.log(categories);
-    
-    const portfolio = document.querySelector("#portfolio");
-    const divCategories = document.createElement("div");
-    divCategories.classList.add("filters");
-    portfolio.insertBefore(divCategories, gallery);
 
     //category "All".
     const categorieButton = document.createElement("button");
     categorieButton.dataset.id = 0;
     categorieButton.textContent = "Tous"; 
-    divCategories.appendChild(categorieButton);
+    filters.appendChild(categorieButton);
     // console.log("categorieButton.id");
     // console.log(categorieButton);
     addListenerCategories(categorieButton);
@@ -94,7 +89,7 @@ async function categoriesFilters (){
         categorieButton.dataset.id = categorie.id;
         categorieButton.textContent = categorie.name;
         // console.log("plop ! ");
-        divCategories.appendChild(categorieButton);
+        filters.appendChild(categorieButton);
         addListenerCategories(categorieButton);
     }
 }
@@ -137,6 +132,7 @@ function createTableCategorieWorks(idCategorie){
 //main function for Admin Mode
 async function adminMode(){
     if(localStorage.getItem("User")){
+        
         //top bar admin edition
         console.log("Connected !");
         let bodySection = document.querySelector("body");
@@ -171,6 +167,9 @@ async function adminMode(){
         <p>modifier</>
         `;
         
+        
+        displayHideElement(filters);
+        
         modalGenerateWorks(works);
         modalDisplayHide();
         modalNavigation();
@@ -193,20 +192,13 @@ function logout(){
     login.href="./index.html";
     login.addEventListener("click", () =>{
     localStorage.removeItem("User");
+
+    displayHideElement(filters);
     })
 }
 
 /********** SCRIPT **********/
-    generateWorks(works);
-    // modalGenerateWorks(works);
-    categoriesFilters();
-
-
-// creationCategoriesFilters().then(()=>{
-//     addListenerCategories();
-// });
-
+generateWorks(works);
+categoriesFilters();
+  
 adminMode()
-// .then(() =>{
-//     supprWork();
-// });

@@ -25,3 +25,4 @@ const modalArrowReturn = document.querySelector(".modalArrowReturn")
 const modalCrossClose = document.querySelector(".modalCrossClose");
 const modalGallery = document.querySelector(".modalGallery");
 const gallery = document.querySelector(".gallery");
+const filters = document.querySelector(".filters");
