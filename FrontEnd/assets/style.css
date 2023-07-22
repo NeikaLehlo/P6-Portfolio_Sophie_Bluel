@@ -372,7 +372,7 @@ footer nav ul {
 	margin-bottom : 10px;
 }
 
-.arrowReturn{
+.modalArrowReturn{
 	position: relative;
 	display: flex;
 	width: 21px;
@@ -438,7 +438,7 @@ figure .trash{
 	background-color: black;
 }
 
-.separationLine{
+.modalSeparationLine{
 	content: "";
 	display: block;
 	width: 420px;
@@ -448,7 +448,7 @@ figure .trash{
 	margin-top: 47px;
 }
 
-.buttonAddPicture{
+.modalButtonAddPicture{
 	width: 237px;
 	border-radius: 60px;
 	background: #1D6154; 
@@ -461,7 +461,7 @@ figure .trash{
 	cursor: pointer;
 }
 
-.buttonSupprAllProjects{
+.modalButtonSupprAllProjects{
 	color: #D65353;
 	text-align: center;
 	font-family: Syne;
@@ -481,7 +481,7 @@ figure .trash{
 	flex-direction:column;
 }
 
-.preview{
+.modalPreview{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -492,21 +492,21 @@ figure .trash{
 	margin-bottom: 30px;
 }
 
-.noPicture{
+.modalPreviewNoPicture{
 	margin : 22px 0 15px 0;
 }
 
-.imgPreview{
+.modalPreviewImg{
 	height: 100%;
 }
 
-.sendPictureClass{
+.modalPreviewInputPicture{
 	position: relative;
 	margin-top: 15px;
 	cursor: pointer;
 }
 
-.sendPictureClass label{
+.modalPreviewInputPicture label{
 	position: relative;
 	width: 173px;
 	height: 36px;
@@ -520,12 +520,12 @@ figure .trash{
 	cursor: pointer;
 }
 
-.divButtonForm{
+.divModalValidateButton{
 	display: flex;
 	justify-content: center;
 }
 
-.sendPictureClass input{
+.modalPreviewInputPicture input{
 	position : absolute;
 	top:0;
 	left: 0;
@@ -547,7 +547,7 @@ figure .trash{
 	border: none;
 }
 
-.preview p{
+.modalPreview p{
 	color: #444;
 	text-align: center;
 	font-size: 10px;
@@ -568,7 +568,7 @@ figure .trash{
 	padding:0;
 }
 
-.selectCategorie{
+.modalSelectCategorie{
 	cursor: pointer; 
 }
 

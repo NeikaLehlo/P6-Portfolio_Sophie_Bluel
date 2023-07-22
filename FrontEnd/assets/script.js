@@ -1,8 +1,3 @@
-/********** VARIABLES **********/
- 
-let works = [];
-let categories = [];
-
 /********** FUNCTIONS **********/
 
 //fetch data. Creating a function here will allow me to call it up later if i need to update the data. 
@@ -16,8 +11,6 @@ async function fetchWorks(){
     .then((worksResponse)=>{
         // works fetch the data json in a table.
         works = worksResponse;
-        //return worksResponse in the console.
-        // console.log(worksResponse);
         return works;
     })
     //if error here return error in the console.
@@ -29,70 +22,80 @@ async function fetchCategories(){
     .then((response)=>response.json())
     .then((categoriesResponse)=>{
         categories = categoriesResponse;
-        // console.log(categoriesResponse);
         return categories;
     })
     .catch((error)=>console.log(error));
 }
 
-//generate works
-function generateWorks(worksArray){
-    const divGallery = document.querySelector(".gallery");
-    divGallery.innerHTML="";
-    for (let i = 0; i< worksArray.length; i++) {
-        //checkpoint
-        // console.log(works[i]);
 
-        // fetch DOM element which will host the works
-        
-        // creation of a <figure> tag 
-        const workElement = document.createElement("figure");
-        // creation of a <img> tag, for works' images (imageUrl)
-        const imageWork = document.createElement("img");
-        // creation of a <figcaption> tag for works' titles (title)
-        const titleWork = document.createElement("figcaption");
+//generate works in the gallery.
+async function generateWorks(worksArray){    
+    //  console.log("init generationWorks");
+     await fetchWorks()
+    .then((response)=>{
+        // console.log("gallery.innerHTML:");
+        // console.log(gallery.innerHTML);
+        // if the Gallery is empty :
+        if (gallery.innerHTML === ""){
+            // console.log("gallery vide => première génération ");
+            worksArray = works;
+        }
+        //reset Gallery for no multiple works.
+        gallery.innerHTML="";
+        worksArray.forEach(function(work){   
+            // creation of a <figure> tag 
+            const workElement = document.createElement("figure");
+            // creation of a <img> tag, for works' images (imageUrl)
+            const imageWork = document.createElement("img");
+            // creation of a <figcaption> tag for works' titles (title)
+            const titleWork = document.createElement("figcaption");
 
-        //insert src of the image
-        imageWork.src = worksArray[i].imageUrl;
-        //insesrt alt of the image
-        imageWork.alt = worksArray[i].title;
-        //insert title of the image
-        titleWork.innerText = worksArray[i].title;
+            //insert src of the image
+            imageWork.src = work.imageUrl;
+            //insesrt alt of the image
+            imageWork.alt = work.title;
+            //insert title of the image
+            titleWork.innerText = work.title;
 
-        //link the <img> and <figcaption> tag to the <figure>
-        workElement.appendChild(imageWork);
-        workElement.appendChild(titleWork);
+            //link the <img> and <figcaption> tag to the <figure>
+            workElement.appendChild(imageWork);
+            workElement.appendChild(titleWork);
 
-        //link the <figure> tag to the <gallery>
-        divGallery.appendChild(workElement);
-    }
+            //link the <figure> tag to the <gallery>
+            gallery.appendChild(workElement);
+        })
+    })
+    .catch((error)=>console.log(error));
 }
 
-// generate categorie buttons
-async function creationCategoriesFilters (){
+// generate functionnal categorie buttons
+async function categoriesFilters (){
     await fetchCategories();
     // console.log(categories);
     
-    const sectionPortfolio = document.querySelector("#portfolio");
-    const divGallery = document.querySelector(".gallery");
+    const portfolio = document.querySelector("#portfolio");
     const divCategories = document.createElement("div");
     divCategories.classList.add("filters");
-    sectionPortfolio.insertBefore(divCategories, divGallery);
+    portfolio.insertBefore(divCategories, gallery);
 
-    //unshift
+    //category "All".
     const categorieButton = document.createElement("button");
     categorieButton.dataset.id = 0;
-    categorieButton.textContent = "Tous";
-    
+    categorieButton.textContent = "Tous"; 
     divCategories.appendChild(categorieButton);
+    // console.log("categorieButton.id");
+    // console.log(categorieButton);
+    addListenerCategories(categorieButton);
 
     for (let i = 0; i < categories.length ; i++){
+        // console.log(categories.length);
         const categorie = categories[i];
         const categorieButton = document.createElement("button");
         categorieButton.dataset.id = categorie.id;
         categorieButton.textContent = categorie.name;
-        
+        // console.log("plop ! ");
         divCategories.appendChild(categorieButton);
+        addListenerCategories(categorieButton);
     }
 }
 
@@ -103,46 +106,37 @@ function removeClass(elements, classRemoved){
     }
 }
 
-//Display works by category
-function addListenerCategories() {
-    const btnCategoriesElements= document.querySelectorAll("#portfolio .filters button");
-    // console.log(categoriesElements);
-    
-    //foreach
-    for (let i = 0; i < btnCategoriesElements.length; i++){
-        
-        btnCategoriesElements[i].addEventListener("click",function (event) {
-            removeClass(btnCategoriesElements,"selected");
-            let categoryWorks = [];
-            console.log("click click! "+ "i: " + i);
-            const id = event.target.dataset.id;
+//Add eventListener on filters button + generate associated works
+function addListenerCategories(categorieButton) {
+    categorieButton.addEventListener("click", (event)=>{
+        const btnCategoriesElements= document.querySelectorAll("#portfolio .filters button");
+        const id = event.target.dataset.id;
+        removeClass(btnCategoriesElements,"selected");
+        createTableCategorieWorks(id);
+        generateWorks(categoryWorks);
+        modalGenerateWorks(categoryWorks);
+        categorieButton.classList.add("selected");
+    })
+}
 
-            //voir for each
-            for ( let j = 0 ; j < works.length ; j++){
-                console.log("catégorie : " + works[j].categoryId + "; id : " +id);
-                console.log(id == works[j].categoryId);
-                
-                if (id == 0){
-                    categoryWorks = works;
-                    console.log(categoryWorks);
-                } else if (id == works[j].categoryId) {
-                    categoryWorks.push(works[j]);
-                    console.log(categoryWorks);
-                }
-
-                generateWorks(categoryWorks);
-                modalGenerateWorks(categoryWorks)
-                btnCategoriesElements[i].classList.add("selected");
-            }
-        })
-    }
+//create an Array for differente categorie works selected
+function createTableCategorieWorks(idCategorie){
+    categoryWorks = [];
+    works.forEach(function(work){
+        if (idCategorie == 0){
+            categoryWorks = works;
+            // console.log(categoryWorks);
+        } else if (idCategorie == work.categoryId) {
+            categoryWorks.push(work);
+            // console.log(categoryWorks);
+        }
+    })
 }
 
 /******** ADMINISTRATION MODE ********/
 //main function for Admin Mode
 async function adminMode(){
     if(localStorage.getItem("User")){
-
         //top bar admin edition
         console.log("Connected !");
         let bodySection = document.querySelector("body");
@@ -176,9 +170,11 @@ async function adminMode(){
         <img src="./assets/icons/EditionBlack.png">
         <p>modifier</>
         `;
-
+        
+        modalGenerateWorks(works);
         modalDisplayHide();
         modalNavigation();
+        
         previewPicture();
         clickResetPicture();
         initCategorieSelect();
@@ -201,14 +197,14 @@ function logout(){
 }
 
 /********** SCRIPT **********/
-fetchWorks().then(()=>{
     generateWorks(works);
-    modalGenerateWorks(works);
-});
+    // modalGenerateWorks(works);
+    categoriesFilters();
 
-creationCategoriesFilters().then(()=>{
-    addListenerCategories();
-});
+
+// creationCategoriesFilters().then(()=>{
+//     addListenerCategories();
+// });
 
 adminMode()
 // .then(() =>{

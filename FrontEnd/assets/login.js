@@ -42,9 +42,8 @@ async function fetchLogin(email, password){
     })
     .then((response) => response.json())
     .then((loginResponse) => {
-        console.log("Requête ok");
-        console.log(loginResponse);
-        // console.log(loginResponse.token)
+        // console.log("Requête ok");
+        // console.log(loginResponse);
         if (!loginResponse.token){
             console.log("Email et/ou Mot de Passe incorrect");
             throw new Error("Email et/ou Mot de Passe incorrect");

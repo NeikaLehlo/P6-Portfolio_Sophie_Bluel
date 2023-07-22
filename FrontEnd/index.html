@@ -9,6 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="./assets/variables.js" defer></script>
 	<script src="./assets/modal.js" defer></script>
 	<script src="./assets/script.js" defer></script>
 	
@@ -42,8 +43,7 @@
 		<div class=portfolioTitle>
 			<h2>Mes Projets</h2>
 		</div>
-		<div class="gallery">
-		</div>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -62,42 +62,38 @@
 	<section id="modalSection" class="hidden">
 		<div id="modal">
 			<div class="modalNav">
-				<img class="arrowReturn hidden" src="./assets/icons/arrow-left.png">
-				<img class="crossClose" src="./assets/icons/close.png">
+				<img class="modalArrowReturn hidden" src="./assets/icons/arrow-left.png">
+				<img class="modalCrossClose" src="./assets/icons/close.png">
 			</div>
 			<div class="modalEditionGallery">
 				<h3>Galerie photo</h3>
-				<div class="modalGallery">
-					<!-- generate with JS -->
-				</div>
-				<div class="separationLine"></div>
-				<div class="buttonAddPicture">Ajouter une photo</div>
-				<div class="buttonSupprAllProjects">Supprimer la galerie</div>
+				<div class="modalGallery"></div>
+				<div class="modalSeparationLine"></div>
+				<div class="modalButtonAddPicture">Ajouter une photo</div>
+				<div class="modalButtonSupprAllProjects">Supprimer la galerie</div>
 			</div>
 			<div class="modalAddProject hidden">
 				<h3>Ajout photo</h3>
 				<form id="modalForm" method="POST" enctype="multipart/form-data">
-					<div class="preview">
-						<img class="noPicture"src="./assets/icons/picture.png">
-						<img class="imgPreview hidden">
-						<div class="sendPictureClass">
+					<div class="modalPreview">
+						<img class="modalPreviewNoPicture"src="./assets/icons/picture.png">
+						<img class="modalPreviewImg hidden">
+						<div class="modalPreviewInputPicture">
 							<label for="sendPicture">+ Ajouter photo</label>
 							<input type="file" id="sendPicture" name="sendPicture" accept="image/png, image/jpeg">
 						</div>
-						<p class="previewP">jpg, png : 4mo max</p>
+						<p class="modalPreviewP">jpg, png : 4mo max</p>
 					</div>
 					<label class="modalLabel" for="pictureTitle">Titre</label>
 					<input class="modalField" type="text" id="pictureTitle" name="pictureTitle">
 					<label class="modalLabel" for="pictureCategorie">Catégorie</label>
-					<select class="modalField selectCategorie" name="pictureCategorie" id="pictureCategorie">
+					<select class="modalField modalSelectCategorie" name="pictureCategorie" id="pictureCategorie">
 					</select>
-					<div class="separationLine"></div>
-					<div class="divButtonForm">
+					<div class="modalSeparationLine"></div>
+					<div class="divModalValidateButton">
 						<button class="modalValidateButton">Valider</button>
 					</div>
 				</form>
-				
-
 			</div>
 		</div>
 	</section>
