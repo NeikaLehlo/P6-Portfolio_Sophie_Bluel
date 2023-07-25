@@ -6,6 +6,8 @@ const fileTypes = [
     'image/jpeg',
     'image/png'
   ];
+
+
 const maxSize = 4194304; 
 
 const modalSection = document.getElementById("modalSection");

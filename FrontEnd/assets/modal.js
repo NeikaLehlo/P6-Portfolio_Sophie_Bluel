@@ -1,22 +1,3 @@
-//****** VARIABLES ******//
-// const modalSection = document.getElementById("modalSection");
-// const sendPicture = document.getElementById("sendPicture");
-// const modalPreviewImg = document.querySelector(".modalPreviewImg");
-// const modalPreviewNoPicture = document.querySelector(".modalPreviewNoPicture");
-// const modalPreviewInputPicture = document.querySelector(".modalPreviewInputPicture");
-// const modalPreviewP = document.querySelector(".modalPreviewP");
-// const pictureCategorie = document.getElementById("pictureCategorie");
-// const modalValidateButton = document.querySelector(".modalValidateButton");
-// const pictureTitle = document.getElementById("pictureTitle");
-// const modalForm = document.getElementById("modalForm");
-// const modalButtonAddPicture = document.querySelector(".modalButtonAddPicture");
-// const modalEditionGallery = document.querySelector(".modalEditionGallery");
-// const modalAddProject = document.querySelector(".modalAddProject");
-// const modalArrowReturn = document.querySelector(".modalArrowReturn")
-// const trash = document.querySelectorAll(".trash");
-
-
-
 //****** FUNCTIONS ******/
 
 //Add or Remove "hidden" class for display or hide Element.
@@ -26,7 +7,7 @@ function displayHideElement(element){
 
 // ****MODAL BASICS : CLOSE, OPEN, RETURN BUTTON ETC ...****//
 // display or hide modalSection
-function modalDisplayHide() {
+function displayHideModal() {
     const divEditionGallery = document.getElementById("divEditionGallery");
     divEditionGallery.addEventListener("click", function (){
         // console.log("Affichage Edition Modal. ... Normalement.");
@@ -64,15 +45,16 @@ function modalNavigation(){
 
  // **** GALLERY ****//
  //generate works in modal
- async function modalGenerateWorks(worksArray){
+ async function modalGenerateWorks(){
+    console.log("init ModalgenerationWorks");
     await fetchWorks()
-    .then((response)=>{
-        if (modalGallery.innerHTML === ""){
+    // .then((response)=>{
+        // if (modalGallery.innerHTML === ""){
             // console.log("gallery vide => première génération ");
-            worksArray = works;
-        }
+            // worksArray = works;
+        // }
         modalGallery.innerHTML="";
-        worksArray.forEach(function(work){
+        works.forEach(function(work){
             const workElement = document.createElement("figure");
             const imageWork = document.createElement("img");
             const textWork = document.createElement("p");
@@ -90,6 +72,7 @@ function modalNavigation(){
 
             trashWork.src = "./assets/icons/trash.svg";
             trashWork.alt= "Button Trash";
+            trashWork.title="suppression de la photo";
             trashWork.classList.add("trash");
             trashWork.dataset.workId = work.id;
             trashWork.addEventListener("click", () =>{
@@ -104,7 +87,7 @@ function modalNavigation(){
 
             modalGallery.appendChild(workElement);
         })
-    }).catch((error)=>console.log(error))
+    // }).catch((error)=>console.log(error))
  }
 
 
@@ -115,14 +98,10 @@ function previewPicture() {
     sendPicture.addEventListener("change", ()=> {
         //fetch files info.
         let curFile = sendPicture.files;
-        // console.log(curFile);
-        // console.log(curFile[0].size);
-        // console.log(curFile[0].type);
         validTypeSize(curFile);
         if (validTypeSize(curFile)){
             modalPreviewImg.src = URL.createObjectURL(curFile[0]);
-            // console.log(URL.createObjectURL(curFile[0]));
-            // console.log(modalPreviewImg.src);
+            
             //hide
             displayHideElement(modalPreviewNoPicture);
             displayHideElement(modalPreviewInputPicture);
@@ -139,16 +118,16 @@ function previewPicture() {
 
 function resetPicture(){
     //display
-        displayHideElement(modalPreviewNoPicture);
-        displayHideElement(modalPreviewInputPicture);
-        displayHideElement(modalPreviewP);
-        //hide
-        displayHideElement(modalPreviewImg);
+    displayHideElement(modalPreviewNoPicture);
+    displayHideElement(modalPreviewInputPicture);
+    displayHideElement(modalPreviewP);
+    //hide
+    displayHideElement(modalPreviewImg);
 
-        // clear input.
-        sendPicture.value = null;
-        modalPreviewImg.src= "";
-        validateFormGreen();
+    // clear input.
+    sendPicture.value = null;
+    modalPreviewImg.src= "";
+    validateFormGreen();
 }
 
 // reset picture when you click on it.
@@ -157,6 +136,7 @@ function clickResetPicture(){
         resetPicture();
     });
 }
+
 //**** other inputs *****/
 //clear all input
 function clearForm(){
@@ -165,7 +145,7 @@ function clearForm(){
     pictureCategorie.value=1;
 }
 
-//categorie list in form
+//categories list in form
 async function initCategorieSelect(){
     await fetchCategories();
     for (let i = 0; i < categories.length ; i++){
@@ -212,18 +192,17 @@ function errorMessage(message){
 }
 
 
-// Form validate -> bouton turn on green
+// Form validate -> bouton turn on and green
 function validateFormGreen(){
     if ( !(modalPreviewImg.classList.contains("hidden")) && !(pictureTitle.value === "") && !(pictureCategorie.value === "") ){
         modalValidateButton.style.backgroundColor = "#1D6154";
         modalValidateButton.style.cursor = "pointer" ;
-        // console.log(pictureCategorie.value);
+        modalValidateButton.disabled = false;
     }else{
         // throw new error("Erreur : Vérifier que tous les champs sont bien remplis et valides!")
         modalValidateButton.style.backgroundColor = "#A7A7A7";
-
-
-        //------------------add cursor: pointer ----------------//
+        modalValidateButton.style.cursor = "auto" ;
+        modalValidateButton.disabled = true;
     }
 }
 
@@ -258,11 +237,10 @@ function addWorks(){
                     },
             body: newWork
         }).then((response)=>{
-            fetchWorks().then(()=>{
-            generateWorks(works);
-            modalGenerateWorks(works);
-            })
-            // reset form:
+            //update galleries
+            generateAllWorks()
+            modalGenerateWorks();
+            //reset form:
             clearForm();
             //return on gallery modal:
             displayHideElement(modalEditionGallery);
@@ -286,10 +264,10 @@ async function delWork(workId){
                 // body: workId
             }).then((response)=>{
                 //à revoir .
-                fetchWorks().then(()=>{
-                generateWorks(works);
-                modalGenerateWorks(works);
-                });
+                // fetchWorks().then(()=>{
+                generateAllWorks()
+                modalGenerateWorks();
+                // });
             }).catch((error)=>console.log(error))
 
 }

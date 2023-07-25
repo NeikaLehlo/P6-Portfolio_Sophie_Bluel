@@ -27,77 +27,31 @@ async function fetchCategories(){
     .catch((error)=>console.log(error));
 }
 
-
-//generate works in the gallery.
-async function generateWorks(worksArray){    
-    //  console.log("init generationWorks");
-     await fetchWorks()
-    .then((response)=>{
-        // console.log("gallery.innerHTML:");
-        // console.log(gallery.innerHTML);
-        // if the Gallery is empty :
-        if (gallery.innerHTML === ""){
-            // console.log("gallery vide => première génération ");
-            worksArray = works;
-        }
-        //reset Gallery for no multiple works.
-        gallery.innerHTML="";
-        worksArray.forEach(function(work){   
-            // creation of a <figure> tag 
-            const workElement = document.createElement("figure");
-            // creation of a <img> tag, for works' images (imageUrl)
-            const imageWork = document.createElement("img");
-            // creation of a <figcaption> tag for works' titles (title)
-            const titleWork = document.createElement("figcaption");
-
-            //insert src of the image
-            imageWork.src = work.imageUrl;
-            //insesrt alt of the image
-            imageWork.alt = work.title;
-            //insert title of the image
-            titleWork.innerText = work.title;
-
-            //link the <img> and <figcaption> tag to the <figure>
-            workElement.appendChild(imageWork);
-            workElement.appendChild(titleWork);
-
-            //link the <figure> tag to the <gallery>
-            gallery.appendChild(workElement);
-        })
-    })
-    .catch((error)=>console.log(error));
+// a litlle function for remove classes
+function removeClass(elements, classRemoved){
+    for (let i = 0; i < elements.length ; i++){
+        elements[i].classList.remove(classRemoved);
+    }
 }
 
 // generate functionnal categorie buttons
 async function categoriesFilters (){
     await fetchCategories();
-    // console.log(categories);
 
     //category "All".
     const categorieButton = document.createElement("button");
     categorieButton.dataset.id = 0;
     categorieButton.textContent = "Tous"; 
     filters.appendChild(categorieButton);
-    // console.log("categorieButton.id");
-    // console.log(categorieButton);
     addListenerCategories(categorieButton);
 
     for (let i = 0; i < categories.length ; i++){
-        // console.log(categories.length);
         const categorie = categories[i];
         const categorieButton = document.createElement("button");
         categorieButton.dataset.id = categorie.id;
         categorieButton.textContent = categorie.name;
-        // console.log("plop ! ");
         filters.appendChild(categorieButton);
         addListenerCategories(categorieButton);
-    }
-}
-
-// a litlle function for remove classes
-function removeClass(elements, classRemoved){
-    for (let i = 0; i < elements.length ; i++){
-        elements[i].classList.remove(classRemoved);
     }
 }
 
@@ -109,12 +63,19 @@ function addListenerCategories(categorieButton) {
         removeClass(btnCategoriesElements,"selected");
         createTableCategorieWorks(id);
         generateWorks(categoryWorks);
-        modalGenerateWorks(categoryWorks);
         categorieButton.classList.add("selected");
     })
 }
 
-//create an Array for differente categorie works selected
+//sync "works" array with the DB and generate all works in the gallery.
+async function generateAllWorks(){
+    await fetchWorks();
+    // console.log("init generateAllWorks");
+    // console.log(works);
+    generateWorks(works);
+}
+
+//create an Array for different categorie works selected
 function createTableCategorieWorks(idCategorie){
     categoryWorks = [];
     works.forEach(function(work){
@@ -128,7 +89,52 @@ function createTableCategorieWorks(idCategorie){
     })
 }
 
+//generate works in the gallery.
+function generateWorks(worksArray){    
+    //  console.log("init generationWorks");
+
+    //reset Gallery for no multiple works.
+    gallery.innerHTML="";
+    worksArray.forEach(function(work){   
+        // creation of a <figure> tag 
+        const workElement = document.createElement("figure");
+        // creation of a <img> tag, for works' images (imageUrl)
+        const imageWork = document.createElement("img");
+        // creation of a <figcaption> tag for works' titles (title)
+        const titleWork = document.createElement("figcaption");
+
+        //insert src of the image
+        imageWork.src = work.imageUrl;
+        //insesrt alt of the image
+        imageWork.alt = work.title;
+        //insert title of the image
+        titleWork.innerText = work.title;
+
+        //link the <img> and <figcaption> tag to the <figure>
+        workElement.appendChild(imageWork);
+        workElement.appendChild(titleWork);
+
+        //link the <figure> tag to the <gallery>
+        gallery.appendChild(workElement);
+    })
+}
+
+
+
+
 /******** ADMINISTRATION MODE ********/
+// logout
+function logout(){
+    let login = document.getElementById("login");
+    login.innerText="logout";
+    login.href="./index.html";
+    login.addEventListener("click", () =>{
+    localStorage.removeItem("User");
+
+    displayHideElement(filters);
+    })
+}
+
 //main function for Admin Mode
 async function adminMode(){
     if(localStorage.getItem("User")){
@@ -167,11 +173,10 @@ async function adminMode(){
         <p>modifier</>
         `;
         
-        
         displayHideElement(filters);
         
-        modalGenerateWorks(works);
-        modalDisplayHide();
+        modalGenerateWorks();
+        displayHideModal();
         modalNavigation();
         
         previewPicture();
@@ -180,25 +185,12 @@ async function adminMode(){
         validateFormGreen();
         EventListenerTextInput();
         addWorks();
-        // supprWork()
-        // console.log(classTrash);
     }
 }
 
-// logout
-function logout(){
-    let login = document.getElementById("login");
-    login.innerText="logout";
-    login.href="./index.html";
-    login.addEventListener("click", () =>{
-    localStorage.removeItem("User");
 
-    displayHideElement(filters);
-    })
-}
 
 /********** SCRIPT **********/
-generateWorks(works);
+generateAllWorks();
 categoriesFilters();
-  
 adminMode()
