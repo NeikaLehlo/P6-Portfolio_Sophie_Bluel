@@ -382,6 +382,11 @@ footer nav ul {
 	height: 21px;
 	top:0;
 	right:525px;
+	cursor: pointer;
+}
+
+.modalCrossClose{
+	cursor: pointer;
 }
 
 .modalEditionGallery{

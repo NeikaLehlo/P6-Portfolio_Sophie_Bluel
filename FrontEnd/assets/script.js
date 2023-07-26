@@ -1,7 +1,7 @@
 /********** FUNCTIONS **********/
 
-//fetch data. Creating a function here will allow me to call it up later if i need to update the data. 
-//(if data has been added or deleted, for example)
+// fetch data. Creating a function here will allow me to call it up later if i need to update the data. 
+// (if data has been added or deleted, for example)
 async function fetchWorks(){
     //wait for the data to be retrieved before continuing with the code. (await)
     await fetch('http://localhost:5678/api/works')
@@ -17,6 +17,7 @@ async function fetchWorks(){
     .catch((error)=>console.log(error));
 }
 
+// fetch categories and put them in "categories" array
 async function fetchCategories(){
     await fetch('http://localhost:5678/api/categories')
     .then((response)=>response.json())
@@ -27,7 +28,7 @@ async function fetchCategories(){
     .catch((error)=>console.log(error));
 }
 
-// a litlle function for remove classes
+// A litlle function for remove classes
 function removeClass(elements, classRemoved){
     for (let i = 0; i < elements.length ; i++){
         elements[i].classList.remove(classRemoved);
@@ -67,14 +68,6 @@ function addListenerCategories(categorieButton) {
     })
 }
 
-//sync "works" array with the DB and generate all works in the gallery.
-async function generateAllWorks(){
-    await fetchWorks();
-    // console.log("init generateAllWorks");
-    // console.log(works);
-    generateWorks(works);
-}
-
 //create an Array for different categorie works selected
 function createTableCategorieWorks(idCategorie){
     categoryWorks = [];
@@ -87,6 +80,14 @@ function createTableCategorieWorks(idCategorie){
             // console.log(categoryWorks);
         }
     })
+}
+
+//sync "works" array with the DB and generate all works in the gallery.
+async function generateAllWorks(){
+    await fetchWorks();
+    // console.log("init generateAllWorks");
+    // console.log(works);
+    generateWorks(works);
 }
 
 //generate works in the gallery.
@@ -129,9 +130,8 @@ function logout(){
     login.innerText="logout";
     login.href="./index.html";
     login.addEventListener("click", () =>{
-    localStorage.removeItem("User");
-
-    displayHideElement(filters);
+        localStorage.removeItem("User");
+        displayHideElement(filters);
     })
 }
 
